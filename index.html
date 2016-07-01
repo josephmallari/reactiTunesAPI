@@ -12,6 +12,38 @@
 <script type="text/jsx">
 
 var App = React.createClass({
+
+		// search call
+		componentDidMount() {
+			this.search('https://itunes.apple.com/search?term=fun');
+		},
+
+		// set initial state
+		getInitialState: function() {
+			return {
+				searchResults: []
+			}
+		},
+
+		// results method
+		showResults: function(response) {
+			this.setState({
+				searchResults: response.results
+			})
+		},
+
+		// AJAX call
+		search: function(URL) {
+			$.ajax({
+				type: "GET",
+				dataType: 'jsonp',
+				url: URL,
+				success: function(response) {
+					this.showResults(response);
+				}.bind(this)			
+			})
+		},
+
     render: function(){
         return (
             <div>
